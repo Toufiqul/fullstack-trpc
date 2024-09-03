@@ -1,0 +1,26 @@
+services:
+  mono:
+    container_name: qr-mono
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    restart: unless-stopped
+    working_dir: /app
+    command: pnpm dev
+    ports:
+      - target: 3001
+        published: 3001
+
+      - target: 5173
+        published: 5173
+
+    volumes:
+      - ./:/app
+    networks:
+      - qr-mono
+
+networks:
+  qr-mono:
+    name: qr-mono
+    driver: bridge
